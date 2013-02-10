@@ -1,7 +1,5 @@
 module RubyHackernews
-
   module MechanizeContext
-
     @@contexts = {}
 
     def self.agent=(key)
@@ -11,6 +9,8 @@ module RubyHackernews
     def agent
       @@default ||= :default
       @@contexts[@@default] = Mechanize.new unless @@contexts[@@default]
+      @@contexts[@@default].user_agent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+
       return @@contexts[@@default]
     end
 
@@ -25,7 +25,5 @@ module RubyHackernews
     def authenticated?(key = :default)
       return @@contexts[key] && @@contexts[key].cookie_jar.jar.any?
     end
-
   end
-
-end  
+end
